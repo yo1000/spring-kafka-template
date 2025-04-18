@@ -1,0 +1,44 @@
+spring:
+  application.name: kafka-consumer
+
+  kafka:
+    bootstrap-servers:
+
+    template:
+      default-topic: sales-tran
+
+    consumer:
+      group-id: sales-tran-total
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+          json:
+            trusted.packages: com.yo1000.kafka
+            use.type.headers: false
+            value.default.type: com.yo1000.kafka.consumer.domain.entity.SalesTransaction
+
+    listener:
+      missing-topics-fatal: false
+      poll-timeout: 5000
+      # When Acked, commit the offset immediately.
+      #ack-mode: manual_immediate
+      # When Acked, commit several offsets together.
+      ack-mode: manual
+
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
+management:
+  server:
+    port: 8090
+
+logging:
+  level:
+    com.yo1000.kafka: info
