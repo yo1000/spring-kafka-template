@@ -45,3 +45,17 @@ ORDER BY
 ### View topic
 
 See: http://localhost:8092/ui/clusters/local/all-topics/sales-tran/messages
+
+
+(Optional) AWS MSK IAM Auth support
+--------------------------------------------------------------------------------
+
+```bash
+./mvnw clean package -Paws-msk-iam-auth
+```
+
+### Config example
+
+See: 
+[compose.iam-auth.yml:L11-14](https://github.com/yo1000/spring-kafka-template/blob/master/compose.iam-auth.yml#L11-L14),
+[compose.iam-auth.yml:L30-33](https://github.com/yo1000/spring-kafka-template/blob/master/compose.iam-auth.yml#L30-L33)
