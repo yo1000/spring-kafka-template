@@ -1,0 +1,37 @@
+spring:
+  application.name: kafka-producer
+
+  kafka:
+    bootstrap-servers:
+
+    template:
+      default-topic: sales-tran
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        topic:
+          num.partitions: 1
+          replication.factor: 1
+        spring.json:
+          add.type.headers: false
+
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
+management:
+  server:
+    port: 8090
+
+logging:
+  level:
+    com.yo1000.kafka: info
+
+app:
+  time:
+    initial: 1999-02-11T00:00:00.000+0000
+    x-speed: 17280
