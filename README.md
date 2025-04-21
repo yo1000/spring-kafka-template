@@ -22,6 +22,11 @@ docker compose down && \
 docker compose up --build
 ```
 
+### View topic
+
+See: http://localhost:8092/ui/clusters/local/all-topics/sales-tran/messages
+
+
 ### View database
 
 See: http://localhost:8032
@@ -42,11 +47,6 @@ ORDER BY
     age_group
 ``` 
 
-### View topic
-
-See: http://localhost:8092/ui/clusters/local/all-topics/sales-tran/messages
-
-
 (Optional) AWS MSK IAM Auth support
 --------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ See: http://localhost:8092/ui/clusters/local/all-topics/sales-tran/messages
 ./mvnw clean package -Paws-msk-iam-auth
 ```
 
-### Config example
+### Config examples
 
 See: 
 [compose.iam-auth.yml:L11-14](https://github.com/yo1000/spring-kafka-template/blob/master/compose.iam-auth.yml#L11-L14),
