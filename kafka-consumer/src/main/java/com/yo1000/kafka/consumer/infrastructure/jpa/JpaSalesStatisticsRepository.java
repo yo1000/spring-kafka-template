@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JpaSalesStatisticsRepository
-        extends SalesStatisticsRepository, JpaRepository<SalesStatistics, String> {}
+        extends SalesStatisticsRepository, JpaRepository<SalesStatistics, String> {
+    @Override
+    SalesStatistics save(SalesStatistics salesStatistics);
+}
