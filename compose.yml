@@ -38,15 +38,54 @@ services:
       test: pg_isready -U pgweb -h 127.0.0.1
       interval: 5s
 
-  pgweb:
-    image: sosedoff/pgweb
+  # Simple DB viewer
+  dbgate:
+    image: dbgate/dbgate
     environment:
-      - PGWEB_DATABASE_URL=postgres://postgres:postgres@postgres:5432/sales_statistics?sslmode=disable
+      CONNECTIONS: conn1
+      LABEL_conn1: postgres
+      SERVER_conn1: postgres
+      USER_conn1: postgres
+      PASSWORD_conn1: postgres
+      PORT_conn1: 5432
+      ENGINE_conn1: postgres@dbgate-plugin-postgres
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - "8032:8081"
+      - "3000:3000"
+
+  # More detailed DB viewer
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    user: root
+    entrypoint: |
+      sh -c '
+        cat <<EOF > /pgadmin4/servers.json
+      {
+        "Servers": {
+          "1": {
+            "Name": "Postgres",
+            "Group": "Servers",
+            "Host": "postgres",
+            "Port": 5432,
+            "MaintenanceDB": "sales_statistics",
+            "Username": "postgres",
+            "SSLMode": "prefer"
+          }
+        }
+      }
+      EOF
+        exec /entrypoint.sh
+      '
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5050:80"
 
   kafka:
     image: apache/kafka-native
